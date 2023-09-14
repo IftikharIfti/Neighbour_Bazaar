@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "121673409590",
+    "project_id": "neighbour-bazaar",
+    "storage_bucket": "neighbour-bazaar.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:121673409590:android:d279b872caf13dba06a497",
+        "android_client_info": {
+          "package_name": "com.project.neighbour_bazaar"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAY9M3dWJzmbXtVKL6EckODZub1fDw57jM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
