@@ -55,7 +55,8 @@ class SettingsScreen extends StatelessWidget {
               // Handle 'Help' action here
             },
           ),
-
+      //version2
+          
           ListTile(
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),
