@@ -80,8 +80,8 @@ class AuthController extends GetxController {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       if(_user.value!=null)
         {
-          //Get.offAll(()=>Dashboard());
-          Get.offAll(()=>UserLocation());
+          Get.offAll(()=>Dashboard());
+         // Get.offAll(()=>UserLocation());
         }
       else {
         print('No User');
