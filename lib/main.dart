@@ -9,14 +9,17 @@ import 'package:get/get.dart';
 import 'package:neighbour_bazaar/auth_controller.dart';
 import 'package:neighbour_bazaar/login_page.dart';
 import 'package:neighbour_bazaar/signup_page.dart';
+import 'package:neighbour_bazaar/timeline.dart';
 import 'package:neighbour_bazaar/user_location.dart';
 import 'package:neighbour_bazaar/welcome_page.dart';
 
 import 'dashboard.dart';
 
-void main() {
+Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   Firebase.initializeApp().then((value) => Get.put(AuthController()));
+ // WidgetsFlutterBinding.ensureInitialized(); // Required for Firebase initialization
+  //await Firebase.initializeApp(); // Initialize Firebase
   runApp(const MyApp());
 }
 
@@ -34,6 +37,7 @@ class MyApp extends StatelessWidget {
         ),
        //home: Homepage(),
         home:  LoginPage()
+      //home: MyFirestoreData()
     );
   }
 }

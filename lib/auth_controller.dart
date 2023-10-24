@@ -10,6 +10,8 @@ import 'package:neighbour_bazaar/user_location.dart';
 import 'package:neighbour_bazaar/user_repository.dart';
 import 'package:neighbour_bazaar/welcome_page.dart';
 
+import 'about_user.dart';
+
 class AuthController extends GetxController {
   // to make the authcontroller globally accessibl anywhere
   /*
@@ -49,8 +51,8 @@ class AuthController extends GetxController {
   try {
     await auth.createUserWithEmailAndPassword(email: email, password: password);
     if(_user.value!=null) {
-      Get.offAll(() =>  Dashboard());
-
+    //  Get.offAll(() =>  Dashboard());
+      Get.off(() => AboutUser(username, email, password));
       final user=UserModel(username: username, email: email, password: password);
       UserRepository.instance.createUser(user);
     }

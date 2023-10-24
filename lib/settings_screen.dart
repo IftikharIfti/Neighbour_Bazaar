@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-
+import 'package:neighbour_bazaar/EditProfile.dart';
 import 'login_page.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -17,6 +17,7 @@ class SettingsScreen extends StatelessWidget {
             leading: Icon(Icons.edit),
             title: Text('Edit Profile'),
             onTap: () {
+              //Get.to(()=>EditProfile(email));
               // Handle 'Edit Profile' action here
             },
           ),

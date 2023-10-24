@@ -2,8 +2,14 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:neighbour_bazaar/dashboard.dart';
+
+import 'home_screen.dart';
 
 class UserLocation extends StatefulWidget {
+
   const UserLocation({Key? key}) : super(key: key);
   @override
   _HomepageState createState() => _HomepageState();
@@ -59,30 +65,60 @@ class _HomepageState extends State<UserLocation> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Text('Coordinates Points',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
-            SizedBox(height: 10,),
-            Text(
-              location, style: TextStyle(color: Colors.black, fontSize: 16),),
-            SizedBox(height: 10,),
-            Text('ADDRESS',
-              style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
-            SizedBox(height: 10,),
-            Text('${Address}'),
-            ElevatedButton(onPressed: () async {
-              Position position = await _getGeoLocationPosition();
-              location =
-              'Lat: ${position.latitude} , Long: ${position.longitude}';
-              GetAddressFromLatLong(position);
-            }, child: Text('Get Location'))
-          ],
+    return WillPopScope(
+      onWillPop: () async {
+        // Navigate back to the HomeScreen when the back button is pressed
+        //Get.to(() => HomeScreen());
+        Get.to(()=>Dashboard());
+        return true; // Allow the back button press
+      },
+      child: Scaffold(
+        body: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Text('Coordinates Points', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+              SizedBox(height: 10,),
+              Text(location, style: TextStyle(color: Colors.black, fontSize: 16),),
+              SizedBox(height: 10,),
+              Text('ADDRESS', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+              SizedBox(height: 10,),
+              Text('${Address}'),
+              ElevatedButton(onPressed: () async {
+                Position position = await _getGeoLocationPosition();
+                location = 'Lat: ${position.latitude} , Long: ${position.longitude}';
+                GetAddressFromLatLong(position);
+              }, child: Text('Get Location'))
+            ],
+          ),
         ),
       ),
     );
+    // return Scaffold(
+    //
+    //   body: Center(
+    //     child: Column(
+    //       mainAxisAlignment: MainAxisAlignment.center,
+    //       children: [
+    //         Text('Coordinates Points',
+    //           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+    //         SizedBox(height: 10,),
+    //         Text(
+    //           location, style: TextStyle(color: Colors.black, fontSize: 16),),
+    //         SizedBox(height: 10,),
+    //         Text('ADDRESS',
+    //           style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),),
+    //         SizedBox(height: 10,),
+    //         Text('${Address}'),
+    //         ElevatedButton(onPressed: () async {
+    //           Position position = await _getGeoLocationPosition();
+    //           location =
+    //           'Lat: ${position.latitude} , Long: ${position.longitude}';
+    //           GetAddressFromLatLong(position);
+    //         }, child: Text('Get Location'))
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }
