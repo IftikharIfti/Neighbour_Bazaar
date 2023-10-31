@@ -44,6 +44,8 @@ dependencies:
   cloud_firestore: ^4.9.1
   geolocator: ^10.0.1
   geocoding: ^2.1.0
+  flutter_svg: ^2.0.8
+  image_picker: ^1.0.4
 
 
 dev_dependencies:

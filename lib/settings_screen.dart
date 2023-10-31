@@ -17,7 +17,7 @@ class SettingsScreen extends StatelessWidget {
             leading: Icon(Icons.edit),
             title: Text('Edit Profile'),
             onTap: () {
-              //Get.to(()=>EditProfile(email));
+              Get.to(()=>EditProfile());
               // Handle 'Edit Profile' action here
             },
           ),

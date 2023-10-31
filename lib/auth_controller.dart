@@ -6,10 +6,11 @@ import 'package:neighbour_bazaar/dashboard.dart';
 import 'package:neighbour_bazaar/login_failure.dart';
 import 'package:neighbour_bazaar/login_page.dart';
 import 'package:neighbour_bazaar/signup_email_password_failure.dart';
-import 'package:neighbour_bazaar/user_location.dart';
+import 'package:neighbour_bazaar/Extras/user_location.dart';
 import 'package:neighbour_bazaar/user_repository.dart';
 import 'package:neighbour_bazaar/welcome_page.dart';
 
+import 'EmailSingleton.dart';
 import 'about_user.dart';
 
 class AuthController extends GetxController {
@@ -52,6 +53,7 @@ class AuthController extends GetxController {
     await auth.createUserWithEmailAndPassword(email: email, password: password);
     if(_user.value!=null) {
     //  Get.offAll(() =>  Dashboard());
+      EmailSingleton().email = email;
       Get.off(() => AboutUser(username, email, password));
       final user=UserModel(username: username, email: email, password: password);
       UserRepository.instance.createUser(user);
@@ -82,6 +84,7 @@ class AuthController extends GetxController {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       if(_user.value!=null)
         {
+          EmailSingleton().email = email;
           Get.offAll(()=>Dashboard());
          // Get.offAll(()=>UserLocation());
         }

@@ -159,6 +159,7 @@ class _AboutUserState extends State<AboutUser> {
 
       // Save the user data in Firestore
       try {
+        await firestore.collection('User').doc(widget.username).set(userData);
         await firestore.collection('User').doc(widget.email).set(userData);
         // Data is saved to Firestore
       } catch (e) {

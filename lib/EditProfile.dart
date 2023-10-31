@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:neighbour_bazaar/EmailSingleton.dart';
 import 'dashboard.dart';
 
 class EditProfile extends StatefulWidget {
-  final String email;
-
-  EditProfile(this.email);
+  // fetch the email here
 
   @override
   _EditProfileState createState() => _EditProfileState();
@@ -16,7 +15,7 @@ class _EditProfileState extends State<EditProfile> {
   final TextEditingController locationController = TextEditingController();
   final TextEditingController contactController = TextEditingController();
   final TextEditingController occupationController = TextEditingController();
-
+  String email=EmailSingleton().email;
   bool isEditing = false;
 
   @override
@@ -28,8 +27,9 @@ class _EditProfileState extends State<EditProfile> {
 
   Future<void> fetchUserData() async {
     try {
+
       final docSnapshot =
-      await FirebaseFirestore.instance.collection('User').doc(widget.email).get();
+      await FirebaseFirestore.instance.collection('User').doc(email).get();// use the email here
       if (docSnapshot.exists) {
         final userData = docSnapshot.data() as Map<String, dynamic>;
         userNameController.text = userData['UserName'] ?? '';
@@ -44,7 +44,7 @@ class _EditProfileState extends State<EditProfile> {
 
   Future<void> updateUserData() async {
     try {
-      await FirebaseFirestore.instance.collection('User').doc(widget.email).set({
+      await FirebaseFirestore.instance.collection('User').doc(email).set({
         'UserName': userNameController.text,
         'Location': locationController.text,
         'ContactNumber': contactController.text,
