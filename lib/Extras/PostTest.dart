@@ -28,13 +28,25 @@ class PostViewTest extends StatelessWidget {
 
           return Column(
             children: [
-              Padding(
-                padding: EdgeInsets.all(16.0),
-                child: Text(
-                  post.caption,
-                  style: TextStyle(fontWeight: FontWeight.bold),
+              Align(
+                alignment: Alignment.centerLeft,
+              child:Text(
+                  post.address,
+                  style: TextStyle(
+                    color: Colors.grey, // Light grey color for address
+                    fontSize: 14.0,
+                  ),
                 ),
               ),
+             Align(
+               alignment: Alignment.centerLeft,
+             child:Text(
+                  post.caption,
+                  style: TextStyle(
+                    fontSize: 17.0,
+                  ),
+                ),
+             ),
               if (post.selectedImage != null)
                 Image.file(
                   File(post.selectedImage!.path),
@@ -43,10 +55,7 @@ class PostViewTest extends StatelessWidget {
                 ),
               if (post.selectedImage == null)
                 Text('No image selected'),
-              Text(
-                post.address,
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+
             ],
           );
         },
