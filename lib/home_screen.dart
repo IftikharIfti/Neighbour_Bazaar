@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:neighbour_bazaar/InternalSetup/Post.dart';
 import 'package:neighbour_bazaar/InternalSetup/upload.dart';
 import 'package:neighbour_bazaar/UserLocation/GetUserLocation.dart';
-class HomeScreen extends StatelessWidget {
-  void navigateToUserLocation() {
-    Get.offAll(() => ShowUserLocation());
-  }
 
+import 'InternalSetup/PostDisplay.dart';
+class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,17 +14,24 @@ class HomeScreen extends StatelessWidget {
       ),
       body: Center(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text('Home Screen Content'),
-            ElevatedButton(
-              onPressed: () {
-              // Get.offAll(()=>UploadPage());
-                navigateToUserLocation();
-              },
-              child: Text('Show User Location'),
+            ElevatedButton(onPressed: (){Get.offAll(UploadPage());}, child: Text("Post"),),
+            Text("Number of posts: ${Post.allPosts.length}"),
+            Expanded(
+              child: ListView.builder(
+                itemCount: Post.allPosts.length, // Assuming you have a list of posts in your Post class
+                itemBuilder: (context, index) {
+                  return PostDisplay(
+                    caption: Post.allPosts[index].caption,
+                    selectedImage: Post.allPosts[index].selectedImage,
+                    address: Post.allPosts[index].address,
+                  );
+                },
+              ),
             ),
-          ],
+
+        ],
         ),
       ),
     );

@@ -78,7 +78,6 @@ class _ShowUserLocationState2 extends State<ShowUserLocation2> {
         ),
       ),
     );
-
   }
 
 }
