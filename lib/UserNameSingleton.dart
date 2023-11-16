@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'dashboard.dart';
 class usernameSingleton {
   static final usernameSingleton _instance = usernameSingleton._internal();
 
@@ -10,11 +7,11 @@ class usernameSingleton {
 
   usernameSingleton._internal();
 
-  String _email='';
+  String _username='';
 
-  String get email => _email;
+  String get username => _username;
 
-  set email(String value) {
-    _email = value;
+  set username(String value) {
+    _username = value;
   }
 }

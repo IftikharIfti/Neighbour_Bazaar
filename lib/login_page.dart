@@ -80,6 +80,7 @@ class _LoginPageState extends State<LoginPage> {
                               borderRadius: BorderRadius.circular(20)
                           )
                       ),
+                      obscureText: true,
                     )
                 ),
 

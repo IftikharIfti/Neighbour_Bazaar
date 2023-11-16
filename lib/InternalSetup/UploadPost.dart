@@ -7,15 +7,36 @@ import 'package:image_picker/image_picker.dart';
 import 'package:neighbour_bazaar/Extras/PostTest.dart';
 import 'package:neighbour_bazaar/UserLocation/GetUserLocation.dart';
 import 'package:neighbour_bazaar/UserLocation/addressReturner.dart';
+import 'package:neighbour_bazaar/dashboard.dart';
 import 'package:neighbour_bazaar/home_screen.dart';
 
 import '../UserLocation/GetUserLoactionforUploadPost.dart';
 import 'Post.dart'; // Import image_picker package
+import 'package:neighbour_bazaar/UserNameSingleton.dart';
 
-class UploadPost extends StatelessWidget {
+class UploadPost extends StatefulWidget
+{
   final XFile? selectedImage; // Assuming you're using XFile from image_picker
-
   UploadPost({required this.selectedImage});
+  @override
+  _UploadPostState createState()=>_UploadPostState();
+}
+
+
+class _UploadPostState extends State<UploadPost> {
+  String dropdownvalue='Mobile';
+  String description = '';
+  var items =  ['Mobile',
+    'Electronics',
+    'Vehicles',
+    'Furniture',
+    'Men\'s clothes',
+    'Women\'s clothes',
+    'Children\'s clothes and toys',
+    'Essential',
+  ];
+
+
   final TextEditingController captionController = TextEditingController();
   @override
   Widget build(BuildContext context) {
@@ -34,6 +55,33 @@ class UploadPost extends StatelessWidget {
               children: [
                 Padding(
                   padding: EdgeInsets.all(16.0),
+                  child: DropdownButtonHideUnderline(
+                    child: DropdownButton(
+                      elevation: 0,
+                      value: dropdownvalue,
+
+                      icon: Icon(Icons.keyboard_arrow_down),
+
+                      items:items.map((String items) {
+                        return DropdownMenuItem(
+                            value: items,
+                            child: Text(items)
+                        );
+                      }
+                      ).toList(),
+
+                      onChanged: (String? newValue){
+                        setState(() {
+                          dropdownvalue = newValue!;
+                        });
+                      },
+
+                    ),
+                  ),
+                ),
+
+                Padding(
+                  padding: EdgeInsets.all(16.0),
                   child: TextFormField(
                     controller: captionController,
                     decoration: InputDecoration(
@@ -42,13 +90,13 @@ class UploadPost extends StatelessWidget {
                   ),
                 ),
                 // Display the selected image
-                if (selectedImage != null)
+                if (widget.selectedImage != null)
                   Image.file(
-                    File(selectedImage!.path),
+                    File(widget.selectedImage!.path),
                     width: 400,
                     height: 600,
                   ),
-                if (selectedImage == null)
+                if (widget.selectedImage == null)
                   Text('No image selected'),
                 Text(
                   address,// Get the address from ShowUserLocation
@@ -56,22 +104,25 @@ class UploadPost extends StatelessWidget {
                 ),
                 ElevatedButton(
                   onPressed: () {
-                    Get.to(() => ShowUserLocation2(selectedImage: selectedImage));
+                    Get.to(() => ShowUserLocation2(selectedImage: widget.selectedImage));
                   },
                   child: Text('Get Location'),
                 ),
                 ElevatedButton(
                   onPressed: () {
+                    description=dropdownvalue;
                     String caption = captionController.text;
                     Post newPost = Post(
+                      UserName: usernameSingleton().username,
                       caption: caption,
-                      selectedImage: selectedImage,
+                      selectedImage: widget.selectedImage,
                       address: address,
+                      description: description,
                     );
 
                     // Add the new post to the list
                     Post.allPosts.add(newPost);
-                     Get.offAll(PostViewTest());
+                     Get.offAll(Dashboard());
                   },
                   child: Text('Create Post'), // Add a button for creating a post
                 ),

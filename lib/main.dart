@@ -18,8 +18,8 @@ import 'package:neighbour_bazaar/welcome_page.dart';
 import 'dashboard.dart';
 
 Future<void> main() async {
- // WidgetsFlutterBinding.ensureInitialized();//original line
- // Firebase.initializeApp().then((value) => Get.put(AuthController()));//original line
+  WidgetsFlutterBinding.ensureInitialized();//original line
+  Firebase.initializeApp().then((value) => Get.put(AuthController()));//original line
  // WidgetsFlutterBinding.ensureInitialized(); // Required for Firebase initialization
   //await Firebase.initializeApp(); // Initialize Firebase
   runApp(const MyApp());
@@ -37,8 +37,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-      home: UploadPage()
-       // home:  LoginPage()
+      //home: UploadPage()
+        home:  LoginPage()
     );
   }
 }

@@ -116,6 +116,8 @@
 // }
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 import 'dashboard.dart';
 
@@ -159,11 +161,19 @@ class _AboutUserState extends State<AboutUser> {
 
       // Save the user data in Firestore
       try {
-        await firestore.collection('User').doc(widget.username).set(userData);
-        await firestore.collection('User').doc(widget.email).set(userData);
+        await firestore.collection('User').doc(widget.username).set(userData).whenComplete(() =>  Get.snackbar("Success", "Your Account has been created",snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.blue.withOpacity(0.8),colorText: Colors.white),
+        );
+        await firestore.collection('User').doc(widget.email).set(userData).whenComplete(() =>  print('Done'),
+        );
+
         // Data is saved to Firestore
       } catch (e) {
+
         // Handle any errors that occur during the process
+        Get.snackbar("Error", "Something went wrong",snackPosition: SnackPosition.BOTTOM,
+            backgroundColor: Colors.red.withOpacity(.8),colorText: Colors.white);
+
         print('Error saving user data: $e');
       }
       // Navigate to the dashboard

@@ -1,7 +1,9 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:neighbour_bazaar/User-Model.dart';
+import 'package:neighbour_bazaar/UserNameSingleton.dart';
 import 'package:neighbour_bazaar/dashboard.dart';
 import 'package:neighbour_bazaar/login_failure.dart';
 import 'package:neighbour_bazaar/login_page.dart';
@@ -56,7 +58,7 @@ class AuthController extends GetxController {
       EmailSingleton().email = email;
       Get.off(() => AboutUser(username, email, password));
       final user=UserModel(username: username, email: email, password: password);
-      UserRepository.instance.createUser(user);
+    //  UserRepository.instance.createUser(user);
     }
     else
       Get.to(()=>LoginPage());
@@ -84,32 +86,30 @@ class AuthController extends GetxController {
       await auth.signInWithEmailAndPassword(email: email, password: password);
       if(_user.value!=null)
         {
+
           EmailSingleton().email = email;
+          final docSnapshot=
+          await FirebaseFirestore.instance.collection('User').doc(email).get();
+          if(docSnapshot.exists)
+            {
+              final userData=docSnapshot.data() as Map<String,dynamic>;
+              usernameSingleton().username=userData['UserName'] ?? '';
+            }
+          //usernameSingleton().username=;
           Get.offAll(()=>Dashboard());
-         // Get.offAll(()=>UserLocation());
         }
       else {
         print('No User');
       }
     }on FirebaseAuthException catch(e) {
-      // ScaffoldMessenger.of(Get.context!).showSnackBar(
-      //   SnackBar(
-      //     content: Text('User not exist'),
-      //     duration: Duration(seconds: 2),
-      //   ),
-      // );
+
       final ex=LogInFailure.code(e.code);
       Get.snackbar("", '${ex.message}',snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.blue.withOpacity(0.8),colorText: Colors.white);
       print('FIREBASE AUTH EXCEPTION-${ex.message}');
       throw ex;
     } catch(_){
-      // ScaffoldMessenger.of(Get.context!).showSnackBar(
-      //   SnackBar(
-      //     content: Text('User not exist'),
-      //     duration: Duration(seconds: 2),
-      //   ),
-      // );
+
       final ex=LogInFailure();
       print('sth is wroooooonnnggggg');
       print('FIREBASE AUTH EXCEPTION-${ex.message}');

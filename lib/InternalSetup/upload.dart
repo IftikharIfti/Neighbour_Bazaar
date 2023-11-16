@@ -61,14 +61,16 @@ class UploadPage extends StatelessWidget {
                               onTap: () async {
                                 final picker = ImagePicker();
                                 final pickedFile = await picker.pickImage(source: ImageSource.camera);
-
+                                selectedImage.value=pickedFile;
                                 if (pickedFile != null) {
+                                  print('Its here');
+                                  Get.offAll(()=>UploadPost(selectedImage: pickedFile));
                                   // A photo has been taken from the camera. You can use 'pickedFile' to access the image.
                                   // Implement your logic to process the taken photo here.
                                 } else {
+                                  print("CANCELLED");
                                   // The user canceled taking a photo.
                                 }
-                                Navigator.pop(context);
                               },
                             ),
                             ListTile(

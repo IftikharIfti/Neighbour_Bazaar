@@ -41,6 +41,7 @@ dependencies:
   #firebase database
   firebase_auth: ^4.9.0
   firebase_core: ^2.15.1
+  firebase_storage: ^11.5.1
   cloud_firestore: ^4.9.1
   geolocator: ^10.0.1
   geocoding: ^2.1.0
