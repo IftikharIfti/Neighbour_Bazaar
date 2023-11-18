@@ -70,6 +70,7 @@ class HomeScreen extends StatelessWidget {
               }, child: Text('Buy')),
             ],
           );
+
         },
       ),
     );

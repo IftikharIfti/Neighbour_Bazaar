@@ -1,26 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-class PostDatabase{
+class dummyDatabase{
   final String imageurl;
   final String userAddress;
   final String caption;
   final String username;
   final String category;
-  PostDatabase({
+  dummyDatabase({
     required this.userAddress,
     required this.imageurl,
     required this.caption,
     required this.username,
     required this.category,
-  });
+});
   Future<void> uploadPost() async {
-
+    if (imageurl.isNotEmpty && userAddress.isNotEmpty && caption.isNotEmpty) {
       final userData = {
         'caption': caption,
         'image': imageurl
       };
-      var userAddressDocRef = FirebaseFirestore.instance.collection('Post').doc(userAddress);
+      var userAddressDocRef = FirebaseFirestore.instance.collection('dummy').doc(userAddress);
       var userAddressDoc = await userAddressDocRef.get();
       if (!userAddressDoc.exists) {
         await userAddressDocRef.set(userData);
@@ -39,9 +39,9 @@ class PostDatabase{
       var alls=Allposts.doc(category);
       var allDoc=await alls.get();
       if(!allDoc.exists)
-      {
-        await alls.set(userData);
-      }
+        {
+          await alls.set(userData);
+        }
 
       CollectionReference relatedPost;
       relatedPost=Allposts.doc(category).collection('RelatedPost');
@@ -60,5 +60,5 @@ class PostDatabase{
       //   print('Error saving user data: $e');
       // }
     }
-
+  }
 }

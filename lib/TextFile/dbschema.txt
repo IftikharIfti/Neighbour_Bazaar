@@ -1,0 +1,25 @@
+Collection: Posts
+  Document: Dhaka
+    Subcollection: Users
+      Document: Ifti
+        Subcollection: AllPosts
+          Document: Mobile
+            Subcollection: RelatedPost
+              Document: 14fqah01240fh
+                Fields:
+                  - image: "url_to_image_mobile"
+                  - caption: "Caption for mobile post"
+          Document: Electronics
+            Subcollection: RelatedPost
+              Document: 16fsfgh01240fh
+                Fields:
+                  - image: "url_to_image_electronics"
+                  - caption: "Caption for electronics post"
+      Document: Abdul
+        Subcollection: AllPosts
+          Document: Electronics
+            Subcollection: RelatedPost
+              Document: qahasdf240fh
+                Fields:
+                  - image: "url_to_image_electronics_abdul"
+                  - caption: "Caption for electronics post by Abdul"

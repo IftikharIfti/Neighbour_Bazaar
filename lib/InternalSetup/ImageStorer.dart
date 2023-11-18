@@ -7,7 +7,7 @@ import 'dart:io';
 class ImageStorer{
   final XFile? selectedImage;
   ImageStorer({required this.selectedImage});
-
+  String imageURL="IF nothing is available";
 
   Future<String?> storeImage() async{
     try{
@@ -16,11 +16,13 @@ class ImageStorer{
           print('Sorry no image');
           return null;
         }
+      print('Hello');
       Reference storageReference=FirebaseStorage.instance.ref().child('Images/${DateTime.now().toString()}');
       File imageFile=File(selectedImage!.path);
       UploadTask uploadTask=storageReference.putFile(imageFile);
       await uploadTask.whenComplete(() => print('Dooooneeeeeeeeeeeeeeeeeeee'));
-      String imageURL=await storageReference.getDownloadURL();
+      imageURL=await storageReference.getDownloadURL();
+      print('Here is the $imageURL');
       return imageURL;
     }
     catch(e)
