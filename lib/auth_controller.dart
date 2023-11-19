@@ -1,7 +1,11 @@
+import 'dart:js';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:neighbour_bazaar/Extras/PostTest.dart';
+import 'package:neighbour_bazaar/Extras/docRet.dart';
 import 'package:neighbour_bazaar/User-Model.dart';
 import 'package:neighbour_bazaar/UserNameSingleton.dart';
 import 'package:neighbour_bazaar/dashboard.dart';
@@ -84,6 +88,7 @@ class AuthController extends GetxController {
   async{
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
+
       if(_user.value!=null)
         {
 
@@ -95,6 +100,8 @@ class AuthController extends GetxController {
               final userData=docSnapshot.data() as Map<String,dynamic>;
               usernameSingleton().username=userData['UserName'] ?? '';
             }
+          await DummyDocumentPrinter.printDummyDocumentIds();
+
           //usernameSingleton().username=;
           Get.offAll(()=>Dashboard());
         }

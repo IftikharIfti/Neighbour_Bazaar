@@ -43,6 +43,7 @@ dependencies:
   firebase_core: ^2.15.1
   firebase_storage: ^11.5.1
   firebase_app_check: ^0.2.1+4
+  http: ^1.1.0
   cached_network_image: ^3.3.0
   cloud_firestore: ^4.9.1
   geolocator: ^10.0.1

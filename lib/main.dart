@@ -6,6 +6,8 @@ import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:neighbour_bazaar/Extras/PostTest.dart';
+import 'package:neighbour_bazaar/Extras/docRet.dart';
 import 'package:neighbour_bazaar/InternalSetup/UploadPost.dart';
 import 'package:neighbour_bazaar/InternalSetup/upload.dart';
 import 'package:neighbour_bazaar/auth_controller.dart';
@@ -37,9 +39,44 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-      //home: UploadPage()
+
         home:  LoginPage()
     );
   }
 }
 
+
+
+
+
+/**The below code is for testing purpose **/
+// import 'package:flutter/material.dart';
+// import 'package:firebase_core/firebase_core.dart';
+// import 'package:neighbour_bazaar/Extras/PostTest.dart';
+//
+// import 'Extras/docRet.dart';
+// import 'Extras/dummyCollectionReader.dart';
+//
+// void main() async {
+//   // Ensure that Flutter is initialized
+//   WidgetsFlutterBinding.ensureInitialized();
+//
+//   // Initialize Firebase
+//   await Firebase.initializeApp();
+//
+//   // Call the method to print dummy document IDs
+//   //await DummyDocumentPrinter.printDummyDocumentIds();
+//
+//   // Run your app
+//   runApp(MyApp());
+// }
+//
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return MaterialApp(
+//       // Your app configuration goes here
+//       home: PostTest(),
+//     );
+//   }
+// }
