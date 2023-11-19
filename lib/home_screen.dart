@@ -1,9 +1,12 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:neighbour_bazaar/Extras/imageSingleton.dart';
 import 'package:neighbour_bazaar/InternalSetup/Post.dart';
 import 'package:neighbour_bazaar/InternalSetup/upload.dart';
 import 'package:neighbour_bazaar/UserLocation/GetUserLocation.dart';
+import 'Extras/PostAlternative.dart';
 import 'InternalSetup/PostDisplay.dart';
 class HomeScreen extends StatelessWidget {
   final reversedPosts = List.of(Post.allPosts.reversed);
@@ -21,11 +24,11 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
+
       body: ListView.builder(
         itemCount: Post.allPosts.length,
         itemBuilder: (context, index) {
           final post = reversedPosts[index];
-
           return Column(
             children: [
               Align(
@@ -57,12 +60,13 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              if (post.selectedImage != null)
+              if(post.selectedImage != null)
                 Image.file(
                   File(post.selectedImage!.path),
                   width: 400,
                   height: 600,
                 ),
+
               if (post.selectedImage == null)
                 Text('No image selected'),
               ElevatedButton(onPressed: (){

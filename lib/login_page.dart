@@ -5,7 +5,9 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:neighbour_bazaar/User-Model.dart';
 import 'package:neighbour_bazaar/signup_page.dart';
 
+import 'OverLay.dart';
 import 'auth_controller.dart';
+import 'dashboard.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -98,8 +100,29 @@ class _LoginPageState extends State<LoginPage> {
         SizedBox(height: 30,),
         GestureDetector(
           onTap: ()
-          {
-            AuthController.instance.login(emailController.text.trim(), passwordController.text.trim());
+          async {
+            // showDialog(context: context, builder:(context){
+            //   return Center(child: CircularProgressIndicator());
+            // },
+            // );
+            OverlayEntry overlayEntry;
+            overlayEntry = OverlayEntry(
+              builder: (context) => LoadingOverlay(),
+            );
+            Overlay.of(context)?.insert(overlayEntry);
+            bool ok=false;
+            ok=await AuthController.instance.login(emailController.text.trim(), passwordController.text.trim());
+            print('i am in login now');
+            if(ok==true) {
+              print('Now inside condition');
+              overlayEntry.remove();
+              Get.offAll(()=>Dashboard());
+            }
+            else
+              {
+                overlayEntry.remove();
+                print('Someting is not right with the auth controller ');
+              }
           },
           child: Container(
             width: w*0.5,

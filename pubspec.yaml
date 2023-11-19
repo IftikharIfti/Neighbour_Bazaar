@@ -42,6 +42,7 @@ dependencies:
   firebase_auth: ^4.9.0
   firebase_core: ^2.15.1
   firebase_storage: ^11.5.1
+  flutter_image_widget: ^0.0.2
   http: ^1.1.0
   cached_network_image: ^3.3.0
   cloud_firestore: ^4.9.1
@@ -49,6 +50,8 @@ dependencies:
   geocoding: ^2.1.0
   flutter_svg: ^2.0.8
   image_picker: ^1.0.4
+  path_provider: ^2.1.1
+  intl: ^0.18.1
 
 
 dev_dependencies:

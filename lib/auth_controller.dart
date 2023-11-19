@@ -15,6 +15,7 @@ import 'package:neighbour_bazaar/user_repository.dart';
 import 'package:neighbour_bazaar/welcome_page.dart';
 
 import 'EmailSingleton.dart';
+import 'OverLay.dart';
 import 'about_user.dart';
 
 class AuthController extends GetxController {
@@ -82,7 +83,7 @@ class AuthController extends GetxController {
    userRepo.createUser(user);
   }
 
-  Future<void> login(String email,String password)
+  Future<bool> login(String email,String password)
   async{
     try {
       await auth.signInWithEmailAndPassword(email: email, password: password);
@@ -101,10 +102,13 @@ class AuthController extends GetxController {
           await DummyDocumentPrinter.printDummyDocumentIds();
 
           //usernameSingleton().username=;
-          Get.offAll(()=>Dashboard());
+          //Get.offAll(()=>Dashboard());
+
+          return true;
         }
       else {
         print('No User');
+        return false;
       }
     }on FirebaseAuthException catch(e) {
 
@@ -112,13 +116,14 @@ class AuthController extends GetxController {
       Get.snackbar("", '${ex.message}',snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.blue.withOpacity(0.8),colorText: Colors.white);
       print('FIREBASE AUTH EXCEPTION-${ex.message}');
-      throw ex;
+
+      return false;
     } catch(_){
 
       final ex=LogInFailure();
       print('sth is wroooooonnnggggg');
       print('FIREBASE AUTH EXCEPTION-${ex.message}');
-      throw ex;
+      return false;
     }
   }
 
