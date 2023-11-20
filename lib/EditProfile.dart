@@ -5,7 +5,6 @@ import 'dashboard.dart';
 
 class EditProfile extends StatefulWidget {
   // fetch the email here
-
   @override
   _EditProfileState createState() => _EditProfileState();
 }

@@ -44,7 +44,12 @@ class _UploadPostState extends State<UploadPost> {
   @override
   Widget build(BuildContext context) {
     String address = AddressReturner().getAddress();
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      Get.to(() => Dashboard()); // Replace Dashboard() with your actual Dashboard class
+      return false; // Return false to prevent default behavior
+    },
+    child:Scaffold(
       appBar: AppBar(
         title: Text('Upload Post'),
       ),
@@ -164,7 +169,8 @@ class _UploadPostState extends State<UploadPost> {
           ),
         ),
       ),
-      resizeToAvoidBottomInset: true, // Set this to true
+      resizeToAvoidBottomInset: true,
+    ),// Set this to true
     );
   }
 }

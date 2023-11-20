@@ -4,13 +4,19 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../dashboard.dart';
 import 'UploadPost.dart';
 
 class UploadPage extends StatelessWidget {
   final selectedImage = Rx<XFile?>(null);
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      Get.to(() => Dashboard()); // Replace Dashboard() with your actual Dashboard class
+      return false; // Return false to prevent default behavior
+    },
+    child: Scaffold(
       appBar: AppBar(
         title: Text('Upload Page'),
       ),
@@ -92,6 +98,7 @@ class UploadPage extends StatelessWidget {
           ),
         ],
       ),
+    ),
     );
   }
 }

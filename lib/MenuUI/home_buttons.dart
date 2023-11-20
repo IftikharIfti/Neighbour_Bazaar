@@ -1,32 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:neighbour_bazaar/MenuUI/children_toys.dart';
-import 'package:neighbour_bazaar/MenuUI/electronics.dart';
-import 'package:neighbour_bazaar/MenuUI/essential.dart';
-import 'package:neighbour_bazaar/MenuUI/furniture.dart';
-import 'package:neighbour_bazaar/MenuUI/mens_fashion.dart';
-import 'package:neighbour_bazaar/MenuUI/vehicles.dart';
-import 'package:neighbour_bazaar/MenuUI/women_fashions.dart';
-import 'package:neighbour_bazaar/UserLocation/AddressSingleton.dart';
 
-import 'InternalSetup/upload.dart';
-import 'MenuUI/mobile.dart';
-
-class HomeScreen extends StatelessWidget {
+class Homescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Main Menu'),
-          actions: [
-            ElevatedButton(
-              onPressed: () {
-                Get.offAll(() => UploadPage()); // Redirect to UploadPage using GetX
-              },
-              child: Text('Sell'), // Button text
-            ),
-          ],
+          title: Text('Square Buttons'),
         ),
         body: ButtonGrid(),
       ),
@@ -61,34 +41,6 @@ class ButtonGrid extends StatelessWidget {
           imagePath: getImagePathForItem(items[index]),
           label: items[index],
           onTap: () {
-            switch (items[index]) {
-              case 'Mobile':
-                Get.to(()=>Mobile());
-                break;//not the thing i want
-              case 'Electronics':
-                 Get.to(()=>electronics());
-                 break;// not the thing I want
-              case 'Vehicles':
-                 Get.to(()=>vehicles());
-                 break;
-              case 'Furniture':
-                 Get.to(()=>furniture());
-                 break;
-              case 'Men\'s clothes':
-                 Get.to(()=>mens_fashion());
-                 break;
-              case 'Women\'s clothes':
-                 Get.to(()=>womens_fashion());
-                 break;
-              case 'Children\'s clothes and toys':
-                 Get.to(()=>children_toys());
-                 break;
-              case 'Essential':
-                Get.to(()=>essential());
-                break;
-            // Add cases for other items
-              default:// Default icon if no match
-            }
             // Your method implementation here
             print('Button ${items[index]} tapped!');
           },
@@ -110,12 +62,12 @@ class ButtonGrid extends StatelessWidget {
         return 'img/furniture.png';
       case 'Men\'s clothes':
         return 'img/men.png';
-      case 'Women\'s clothes':
+        case 'Women\'s clothes':
         return 'img/women.png';
-      case 'Children\'s clothes and toys':
-        return 'img/children.png';
+        case 'Children\'s clothes and toys':
+          return 'img/children.png';
       case 'Essential':
-        return 'img/essential.png';
+         return 'img/essential.png';
     // Add cases for other items
       default:
         return 'img/default_icon.png'; // Default icon if no match
