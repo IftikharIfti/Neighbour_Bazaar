@@ -50,38 +50,3 @@ class MyApp extends StatelessWidget {
 
 
 /**The below code is for testing purpose **/
-// import 'package:flutter/material.dart';
-// import 'package:firebase_core/firebase_core.dart';
-// import 'package:neighbour_bazaar/Extras/ImagePostingTest.dart';
-// import 'package:neighbour_bazaar/Extras/PostTest.dart';
-//
-// import 'Extras/docRet.dart';
-// import 'Extras/dummyCollectionReader.dart';
-//
-// void main() async {
-//   // Ensure that Flutter is initialized
-// //  WidgetsFlutterBinding.ensureInitialized();
-//
-//   // Initialize Firebase
-//  // await Firebase.initializeApp();
-//   String link='https://firebasestorage.googleapis.com/v0/b/neighbour-bazaar.appspot.com/o/Images%2F2023-11-18%2014%3A10%3A29.109326?alt=media&token=a232b5da-b66f-4b6c-9bec-b234e04cdd61';
-//   ImageDownloader imageDownloader = ImageDownloader(downloadLink: link);
-//   imageDownloader.downloadAndDisplayImage();
-//   // Call the method to print dummy document IDs
-//   //await DummyDocumentPrinter.printDummyDocumentIds();
-//
-//   // Run your app
-//   //runApp(MyApp());
-// }
-
-//class MyApp extends StatelessWidget {
-  // @override
-  // Widget build(BuildContext context) {
-  //   return MaterialApp(
-  //     // Your app configuration goes here
-  //     home: ImageDownloader(),
-  //   );
-  // }
-
-
-//}
