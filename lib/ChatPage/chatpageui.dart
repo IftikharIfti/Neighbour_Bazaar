@@ -1,34 +1,37 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:neighbour_bazaar/ChatPage/messagedb.dart';
 import 'package:neighbour_bazaar/UserNameSingleton.dart';
+import 'package:neighbour_bazaar/dashboard.dart';
 
 import 'chatmessage.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Ensure that Flutter is initialized.
-
-  // Initialize Firebase
-  await Firebase.initializeApp();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      home: ChatScreen(),
-    );
-  }
-}
+// Future<void> main() async {
+//   WidgetsFlutterBinding.ensureInitialized(); // Ensure that Flutter is initialized.
+//
+//   // Initialize Firebase
+//   await Firebase.initializeApp();
+//   usernameSingleton().username='shadid';
+//   runApp(MyApp());
+// }
+//
+// class MyApp extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return GetMaterialApp(
+//       home: ChatScreen(),
+//     );
+//   }
+// }
 class ChatScreen extends StatefulWidget {
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ChatScreenState extends State<ChatScreen> {
+ class _ChatScreenState extends State<ChatScreen> {
   final List<String> usernames = [];
 
   @override
@@ -52,7 +55,6 @@ class _ChatScreenState extends State<ChatScreen> {
   Future<List<String>>  fetchfriends()
   async{
     try {
-
       List<String> friends=[];
       CollectionReference dummyCollection = FirebaseFirestore.instance.collection('Message');
       QuerySnapshot querySnapshot = await dummyCollection.get();
@@ -61,7 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
         String user = dummyDoc.id;
         print('I am inside the user $user');
         //if(user==usernameSingleton().username) {
-        if(user=='abc'){
+        if(user==usernameSingleton().username){
           CollectionReference localUsersCollection = dummyDoc.reference
               .collection('chatlist');
           QuerySnapshot localUsersSnapshot = await localUsersCollection.get();
@@ -82,7 +84,12 @@ class _ChatScreenState extends State<ChatScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      Get.to(() => Dashboard()); // Replace Dashboard() with your actual Dashboard class
+      return false; // Return false to prevent default behavior
+    },
+    child: Scaffold(
       appBar: AppBar(
         title: Text('Chat App'),
       ),
@@ -92,17 +99,12 @@ class _ChatScreenState extends State<ChatScreen> {
           return ListTile(
             title: Text(usernames[index]),
             onTap: () {
-              // Navigate to the chat with the selected user
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => ChatDetailScreen(username: usernames[index]),
-                ),
-              );
+              Get.to(()=>ChatDetailScreen(username: usernames[index]));
             },
           );
         },
       ),
+    )
     );
    }
 
@@ -120,6 +122,57 @@ class ChatDetailScreen extends StatefulWidget {
 
 class ChatDetailScreenState extends State<ChatDetailScreen> {
   List<ChatMessage> messages = [];
+
+  @override
+  void initState() {
+    super.initState();
+    fetchMessages();
+  }
+
+  Future<void> fetchMessages() async {
+    try {
+      CollectionReference messageCollection =
+      FirebaseFirestore.instance.collection('Message');
+
+      // Fetch messages from the 'messages' subcollection
+      QuerySnapshot messageSnapshot = await messageCollection
+          .doc(usernameSingleton().username) // Assuming 'widget.username' is the friend's username
+          .collection('chatlist')
+          .doc(widget.username) // Your username
+          .collection('messages')
+          .get();
+
+      // Iterate through the messages and add them to the 'messages' list
+      for (QueryDocumentSnapshot messageDoc in messageSnapshot.docs) {
+        String messageText = messageDoc['message'];
+        String state = messageDoc['state'];
+        //String datetime = messageDoc['datetime'];
+        String text = messageDoc.id;
+        String datetime='';
+        if (text.endsWith("_send")) {
+           datetime=text.substring(0, text.length - 5);
+        } else if (text.endsWith("_received")) {
+           datetime=text.substring(0, text.length - 9);
+        }
+        DateTime dateT = DateTime.parse(datetime);
+        // Create a ChatMessage object and add it to the 'messages' list
+        ChatMessage message = ChatMessage(
+          user: usernameSingleton().username,
+          friend: widget.username,
+          message: messageText,
+          state: state,
+          datetime: dateT,
+        );
+        messages.add(message);
+      }
+
+      // Update the UI after fetching messages
+      setState(() {});
+    } catch (e) {
+      print('Error fetching messages: $e');
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -215,7 +268,7 @@ class ChatDetailScreenState extends State<ChatDetailScreen> {
     setState(() {
       // Create a new message and add it to the list
         messageDatabase message = messageDatabase(
-        user: "abc",
+        user: usernameSingleton().username,
         message: text,
         datetime: DateTime.now(),
         friend: friends,
@@ -225,12 +278,12 @@ class ChatDetailScreenState extends State<ChatDetailScreen> {
           user: friends,
           message: text,
           datetime: DateTime.now(),
-          friend: "abc",
+          friend: usernameSingleton().username,
           state: "received",
         );
         message.uploadPost();
         message1.uploadPost();
-        ChatMessage msg=ChatMessage(user: "abc",
+        ChatMessage msg=ChatMessage(user: usernameSingleton().username,
             friend: friends, message: text, datetime: DateTime.now(),
             state: "send");
       messages.add(msg);

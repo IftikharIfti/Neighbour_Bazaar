@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:neighbour_bazaar/ChatPage/chatpageui.dart';
 import 'package:neighbour_bazaar/home_screen.dart';
 import 'package:neighbour_bazaar/video_screen.dart';
 import 'package:neighbour_bazaar/settings_screen.dart';
@@ -41,7 +42,7 @@ class _DashboardState extends State<Dashboard> {
       case 1:
         return VideoScreen();
       case 2:
-        return MessagesScreen();
+        return ChatScreen();
       case 3:
         return SettingsScreen();
       default:

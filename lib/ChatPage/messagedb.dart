@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class messageDatabase{
   final String user;
@@ -21,9 +22,11 @@ class messageDatabase{
     print(datetime);
     print(state);
     if (user.isNotEmpty && friend.isNotEmpty && message.isNotEmpty) {
+       String timeinput = DateFormat.Hm().format(datetime);
       final userData = {
         'message': message,
         'state': state,
+        'datetime': timeinput,
       };
       var userAddressDocRef = FirebaseFirestore.instance.collection('Message').doc(user);
       var userAddressDoc = await userAddressDocRef.get();
