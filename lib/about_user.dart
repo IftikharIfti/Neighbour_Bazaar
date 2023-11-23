@@ -158,7 +158,10 @@ class _AboutUserState extends State<AboutUser> {
         'Occupation': occupation,
         'ContactNumber': contactNumber,
       };
-
+      final uservalue = {
+        'collected':0,
+        'seen':0
+      };
       // Save the user data in Firestore
       try {
         await firestore.collection('User').doc(widget.username).set(userData).whenComplete(() =>  Get.snackbar("Success", "Your Account has been created",snackPosition: SnackPosition.BOTTOM,
@@ -166,8 +169,9 @@ class _AboutUserState extends State<AboutUser> {
         );
         await firestore.collection('User').doc(widget.email).set(userData).whenComplete(() =>  print('Done'),
         );
+        DocumentReference documentReference = FirebaseFirestore.instance.collection('notificationuser').doc(widget.username);
 
-        // Data is saved to Firestore
+        await documentReference.set(uservalue);
       } catch (e) {
 
         // Handle any errors that occur during the process

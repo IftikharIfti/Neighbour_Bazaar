@@ -17,8 +17,8 @@ class CustomBottomNavigationBar extends StatelessWidget {
           label: 'Home',
         ),
         BottomNavigationBarItem(
-          icon: Icon(Icons.video_library),
-          label: 'Video',
+          icon: Icon(Icons.notifications),
+          label: 'Notification',
         ),
         BottomNavigationBarItem(
           icon: Icon(Icons.message),
