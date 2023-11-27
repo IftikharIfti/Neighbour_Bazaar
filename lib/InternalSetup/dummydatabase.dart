@@ -7,32 +7,38 @@ class dummyDatabase{
   final String caption;
   final String username;
   final String category;
+  final String value;
   dummyDatabase({
     required this.userAddress,
     required this.imageurl,
     required this.caption,
     required this.username,
     required this.category,
+    required this.value
 });
   Future<void> uploadPost() async {
     if (imageurl.isNotEmpty && userAddress.isNotEmpty && caption.isNotEmpty) {
       final userData = {
         'caption': caption,
-        'image': imageurl
+        'image': imageurl,
+        'value':value
       };
+      final nullData=
+          {
+            'null':null
+          };
       var userAddressDocRef = FirebaseFirestore.instance.collection('dummy').doc(userAddress);
       var userAddressDoc = await userAddressDocRef.get();
       if (!userAddressDoc.exists) {
-        await userAddressDocRef.set(userData);
+        await userAddressDocRef.set(nullData);
       }
       CollectionReference userreference ;
       userreference=userAddressDocRef.collection('LocalUsers');
-      //userreference.add(userData);
       var locals=userreference.doc(username);
       var localsDoc=await locals.get();
       if(!localsDoc.exists)
       {
-        await locals.set(userData);
+        await locals.set(nullData);
       }
       CollectionReference Allposts;
       Allposts=userreference.doc(username).collection('AllPosts');
@@ -40,25 +46,13 @@ class dummyDatabase{
       var allDoc=await alls.get();
       if(!allDoc.exists)
         {
-          await alls.set(userData);
+          await alls.set(nullData);
         }
 
       CollectionReference relatedPost;
       relatedPost=Allposts.doc(category).collection('RelatedPost');
       relatedPost.add(userData);
-      // final FirebaseFirestore firestore = FirebaseFirestore.instance;
-      // try {
-      //   await firestore.collection('dummy').doc(userAddress)
-      //       .set(userData)
-      //       .whenComplete(() =>
-      //       print("Done for dummmmyyyyyyyyy")
-      //   );
-      //
-      //
-      //   // Data is saved to Firestore
-      // } catch (e) {
-      //   print('Error saving user data: $e');
-      // }
+
     }
   }
 }

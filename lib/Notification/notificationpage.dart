@@ -16,67 +16,14 @@ class NotificationPage extends StatefulWidget {
 }
 
 class _NotificationPageState extends State<NotificationPage> {
-  final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
-       FlutterLocalNotificationsPlugin();
-
   @override
   void initState() {
     super.initState();
-    // AwesomeNotifications().isNotificationAllowed().then((isAllowed) =>
-    // {
-    //   if(!isAllowed)
-    //     {
-    //       AwesomeNotifications().requestPermissionToSendNotifications()
-    //     }
-    // }
-    // );
   }
-
-
-  // Future<void> _retrieveFCMToken() async {
-  //   String? token = await FirebaseMessaging.instance.getToken();
-  //   print('FCM Token: $token');
-  // }
-
-  // void _configureFirebaseMessaging() {
-  //   FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-  //     print("Received FCM message: $message");
-  //     showLocalNotification(message.data['unseenCount']);
-  //   });
-  // }
-  //
-  // Future<void> initializeNotifications() async {
-  //   final InitializationSettings initializationSettings =
-  //   InitializationSettings(
-  //     android: AndroidInitializationSettings('img/bazaar.png'),
-  //   );
-  //
-  //   await flutterLocalNotificationsPlugin.initialize(
-  //     initializationSettings,
-  //     onDidReceiveNotificationResponse:onSelectNotification,
-  //   );
-  // }
-  //
-  // Future<void> onSelectNotification(NotificationResponse? payload) async {
-  //   // Handle notification tap here
-  //   // Redirect to another page, update 'seen' in Firestore, etc.
-  //   print('Notification tapped with payload: $payload');
-  //
-  // }
-  triggerNotification()
-  {
-    AwesomeNotifications().createNotification(content:
-      NotificationContent(id: 10,
-          channelKey: 'basic_channel',
-         title: 'Hello Brother',
-        body: 'Hellooooo',
-      )
-    );
-  }
-
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Notifications'),
@@ -112,12 +59,17 @@ class _NotificationPageState extends State<NotificationPage> {
 
                    // showLocalNotification(unseen);
 
-                    List<QueryDocumentSnapshot<Object?>>? notifications = snapshot.data as List<QueryDocumentSnapshot<Object?>>?;
+                    List<QueryDocumentSnapshot<Object?>>? thiknotifications = snapshot.data as List<QueryDocumentSnapshot<Object?>>?;
+                    List<QueryDocumentSnapshot<Object?>>? notifications=thiknotifications?.reversed.toList();
                     if (notifications != null) {
                       return ListView.builder(
                         itemCount: notifications.length,
                         itemBuilder: (context, index) {
-                          return buildNotificationCard(notifications[index]);
+                          String nameuser=notifications[index]['user'];
+                          if(usernameSingleton().username!=nameuser)
+                              return buildNotificationCard(notifications[index]);
+                          else
+                             return Container();
                         },
                       );
                     } else {
@@ -177,7 +129,6 @@ class _NotificationPageState extends State<NotificationPage> {
         },
         child: GestureDetector(
           onTap: () {
-            triggerNotification();
             updateField(DocName);
             Get.to(()=>Dashboard());
             // Handle tap on notification
@@ -255,38 +206,6 @@ class _NotificationPageState extends State<NotificationPage> {
     });
 
   }
-  //
-  // void showLocalNotification(int unseenCount) async {
-  //   await flutterLocalNotificationsPlugin.show(
-  //     0,
-  //     'New Notifications',
-  //     'You have $unseenCount new notification(s)',
-  //     NotificationDetails(
-  //       android: AndroidNotificationDetails(
-  //         'neighbour_bazaar',
-  //         'Neighour Bazaar',
-  //         priority: Priority.high,
-  //         importance: Importance.max,
-  //       ),
-  //     ),
-  //     payload: 'New Notification Payload',
-  //   );
-  // }
 }
 
-Future<void> main() async {
-     WidgetsFlutterBinding.ensureInitialized();
-   await Firebase.initializeApp();
-   usernameSingleton().username='abc';
 
-   // AwesomeNotifications().initialize(null, [
-   //      NotificationChannel(channelKey: 'basic_channel', channelName: 'Simple Notification', channelDescription:'Simple Channel')
-   // ],
-   //   debug: true
-   // );
-  runApp(
-    GetMaterialApp(
-      home: NotificationPage(),
-    )
-  );
-}

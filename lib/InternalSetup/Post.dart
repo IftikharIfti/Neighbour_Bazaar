@@ -6,12 +6,14 @@ class Post {
   final XFile? selectedImage;
   final String address;
   final String description;
+  final String value;
   Post({
     required this.UserName,
     required this.caption,
     required this.selectedImage,
     required this.address,
     required this.description,
+    required this.value
   });
   static List<Post> allPosts = []; // A static list to store all posts
   // A method to add a new post to the list

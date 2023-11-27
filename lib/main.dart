@@ -6,10 +6,12 @@ import 'package:flutter/services.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:neighbour_bazaar/Extras/PostTest.dart';
 import 'package:neighbour_bazaar/Extras/docRet.dart';
 import 'package:neighbour_bazaar/InternalSetup/UploadPost.dart';
 import 'package:neighbour_bazaar/InternalSetup/upload.dart';
+import 'package:neighbour_bazaar/UserLocation/AddressSingleton.dart';
 import 'package:neighbour_bazaar/auth_controller.dart';
 import 'package:neighbour_bazaar/login_page.dart';
 import 'package:neighbour_bazaar/signup_page.dart';
@@ -17,13 +19,16 @@ import 'package:neighbour_bazaar/timeline.dart';
 import 'package:neighbour_bazaar/Extras/user_location.dart';
 import 'package:neighbour_bazaar/welcome_page.dart';
 
+import 'UserLocation/LocationSetter.dart';
 import 'dashboard.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();//original line
-  //Firebase.initializeApp().then((value) => Get.put(AuthController()));//original line
+  Firebase.initializeApp().then((value) => Get.put(AuthController()));//original line
  // WidgetsFlutterBinding.ensureInitialized(); // Required for Firebase initialization
-  await Firebase.initializeApp(); // Initialize Firebase
+  //await Firebase.initializeApp(); // Initialize Firebase
+  LocationSetter loc=LocationSetter();
+  loc.getCurrentLocation();
   runApp(const MyApp());
 }
 
@@ -39,8 +44,8 @@ class MyApp extends StatelessWidget {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: Dashboard(),
-      //  home:  LoginPage()
+      //  home: Dashboard(),
+        home:  LoginPage()
     );
   }
 }

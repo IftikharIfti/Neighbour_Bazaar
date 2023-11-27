@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:neighbour_bazaar/Extras/PostTest.dart';
 import 'package:neighbour_bazaar/InternalSetup//dummydatabase.dart';
 import 'package:neighbour_bazaar/InternalSetup/ImageStorer.dart';
 import 'package:neighbour_bazaar/InternalSetup/PostDatabase.dart';
+import 'package:neighbour_bazaar/Notification/notificationdatabase.dart';
 import 'package:neighbour_bazaar/UserLocation/GetUserLocation.dart';
 import 'package:neighbour_bazaar/UserLocation/addressReturner.dart';
 import 'package:neighbour_bazaar/dashboard.dart';
@@ -41,6 +43,7 @@ class _UploadPostState extends State<UploadPost> {
 
 
   final TextEditingController captionController = TextEditingController();
+  final TextEditingController valueController =TextEditingController();
   @override
   Widget build(BuildContext context) {
     String address = AddressReturner().getAddress();
@@ -97,6 +100,15 @@ class _UploadPostState extends State<UploadPost> {
                     ),
                   ),
                 ),
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: TextFormField(
+                    controller: valueController,
+                    decoration: InputDecoration(
+                      hintText: 'Price for the product',
+                    ),
+                  ),
+                ),
                 // Display the selected image
                 if (widget.selectedImage != null)
                   Image.file(
@@ -120,6 +132,7 @@ class _UploadPostState extends State<UploadPost> {
                   onPressed: () async {
                     description=dropdownvalue;
                     String caption = captionController.text;
+                    String value = valueController.text;
                     ImageStorer imagestore=ImageStorer(selectedImage:widget.selectedImage);
                    // imagestore.storeImage();
                     String? imageurl=await imagestore.storeImage() ;
@@ -129,21 +142,8 @@ class _UploadPostState extends State<UploadPost> {
                       selectedImage: widget.selectedImage,
                       address: address,
                       description: description,
+                      value: value
                     );
-                    // if(imageurl!=null) {
-                    //   PostDatabase newpostdb = PostDatabase(
-                    //       username: usernameSingleton().username,
-                    //       userAddress: address,
-                    //       imageurl: imageurl,
-                    //       caption: caption,
-                    //       category: description);
-                    //   newpostdb.uploadPost();
-                    // }
-                    // else
-                    //
-                    //   {
-                    //     print("Sorry man it didn't work");
-                    //   }
                     /** dummy db**/
                     if(imageurl!=null) {
                       dummyDatabase dumb = dummyDatabase(userAddress: address,
@@ -151,6 +151,7 @@ class _UploadPostState extends State<UploadPost> {
                           caption: caption,
                           username: usernameSingleton().username,
                           category: description,
+                          value: value
                       );
                       dumb.uploadPost();
                     }
@@ -158,7 +159,10 @@ class _UploadPostState extends State<UploadPost> {
                       {
                         print("Sorry man didn't work");
                       }
-                    // Add the new post to the list
+                     DateTime dt=DateTime.now();
+                    String sendTime = dt.toString();
+                    notificationDatabase nd=notificationDatabase(username: usernameSingleton().username, address: address, category: description, datetime: sendTime);
+                    nd.uploadPost();
                     Post.allPosts.add(newPost);
                      Get.offAll(Dashboard());
                   },

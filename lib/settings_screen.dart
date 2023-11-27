@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:http/http.dart';
 import 'package:neighbour_bazaar/EditProfile.dart';
+import 'package:neighbour_bazaar/InternalSetup/Post.dart';
 import 'login_page.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -62,6 +64,7 @@ class SettingsScreen extends StatelessWidget {
             leading: Icon(Icons.exit_to_app),
             title: Text('Logout'),
             onTap: () {
+              Post.allPosts.clear();
               Get.offAll(()=>const LoginPage());
               // Handle 'Logout' action here
             },

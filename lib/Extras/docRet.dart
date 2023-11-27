@@ -3,6 +3,7 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:http/http.dart' as http;
+import 'package:neighbour_bazaar/UserLocation/AddressSingleton.dart';
 import 'package:path_provider/path_provider.dart';
 import '../InternalSetup/Post.dart';
 
@@ -13,40 +14,47 @@ class DummyDocumentPrinter {
       CollectionReference dummyCollection = FirebaseFirestore.instance.collection('dummy');
       QuerySnapshot querySnapshot = await dummyCollection.get();
       for (QueryDocumentSnapshot dummyDoc in querySnapshot.docs) {
-        String address=dummyDoc.id;
-        print('Dummy Document ID: ${dummyDoc.id}');
-        CollectionReference localUsersCollection = dummyDoc.reference.collection('LocalUsers');
-        QuerySnapshot localUsersSnapshot = await localUsersCollection.get();
-        for (QueryDocumentSnapshot localUserDoc in localUsersSnapshot.docs) {
-          String userName=localUserDoc.id;
-          print('LocalUser Document ID: ${localUserDoc.id}');
-          CollectionReference allPostsCollection = localUserDoc.reference.collection('AllPosts');
-          QuerySnapshot allPostsSnapshot = await allPostsCollection.get();
-          for (QueryDocumentSnapshot allPostDoc in allPostsSnapshot.docs) {
-            String description=allPostDoc.id;
-            print('AllPosts Document ID: ${allPostDoc.id}');
-            CollectionReference relatedPostCollection = allPostDoc.reference.collection('RelatedPost');
-            QuerySnapshot relatedPostSnapshot = await relatedPostCollection.get();
-            for (QueryDocumentSnapshot relatedPostDoc in relatedPostSnapshot.docs) {
-
-              String imageUrl=relatedPostDoc['image'];
-              String caption=relatedPostDoc['caption'];
-
-              print('RelatedPost Document ID: ${relatedPostDoc.id}');
-              print('Image: ${relatedPostDoc['image']}');
-              print('Caption: ${relatedPostDoc['caption']}');
-                        XFile? selectedImage = await fetchImage(imageUrl);
-                        Post post = Post(
-                          UserName: userName,
-                          caption: caption,
-                          selectedImage: selectedImage,
-                          address: address,
-                          description: description,
-                        );
-                        Post.addNewPost(post);
-            }
-          }
-        }
+        String address = dummyDoc.id;
+        String singleaddress=addressSingleton().address;
+         if(address==singleaddress) {
+           CollectionReference localUsersCollection = dummyDoc.reference
+               .collection('LocalUsers');
+           QuerySnapshot localUsersSnapshot = await localUsersCollection.get();
+           for (QueryDocumentSnapshot localUserDoc in localUsersSnapshot.docs) {
+             String userName = localUserDoc.id;
+             print('LocalUser Document ID: ${localUserDoc.id}');
+             CollectionReference allPostsCollection = localUserDoc.reference
+                 .collection('AllPosts');
+             QuerySnapshot allPostsSnapshot = await allPostsCollection.get();
+             for (QueryDocumentSnapshot allPostDoc in allPostsSnapshot.docs) {
+               String description = allPostDoc.id;
+               print('AllPosts Document ID: ${allPostDoc.id}');
+               CollectionReference relatedPostCollection = allPostDoc.reference
+                   .collection('RelatedPost');
+               QuerySnapshot relatedPostSnapshot = await relatedPostCollection
+                   .get();
+               for (QueryDocumentSnapshot relatedPostDoc in relatedPostSnapshot
+                   .docs) {
+                 String imageUrl = relatedPostDoc['image'];
+                 String caption = relatedPostDoc['caption'];
+                 String value =relatedPostDoc['value'];
+                 print('RelatedPost Document ID: ${relatedPostDoc.id}');
+                 print('Image: ${relatedPostDoc['image']}');
+                 print('Caption: ${relatedPostDoc['caption']}');
+                 XFile? selectedImage = await fetchImage(imageUrl);
+                 Post post = Post(
+                   UserName: userName,
+                   caption: caption,
+                   selectedImage: selectedImage,
+                   address: address,
+                   description: description,
+                   value: value
+                 );
+                 Post.addNewPost(post);
+               }
+             }
+           }
+         }
       }
 
     } catch (e) {

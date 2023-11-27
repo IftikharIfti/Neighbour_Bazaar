@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:neighbour_bazaar/InternalSetup/Post.dart';
@@ -38,6 +39,7 @@ class furniture extends StatelessWidget {
         itemCount: furniturePosts.length,
         itemBuilder: (context, index) {
           final post = furniturePosts[index];
+          String value=post.value;
           return Column(
             children: [
               Align(
@@ -79,8 +81,9 @@ class furniture extends StatelessWidget {
               if (post.selectedImage == null)
                 Text('No image selected'),
               ElevatedButton(onPressed: (){
+                _showConfirmationDialog(context, post);
 
-              }, child: Text('Buy')),
+              }, child: Text('$value Buy')),
             ],
           );
 
@@ -89,4 +92,65 @@ class furniture extends StatelessWidget {
     ),
     );
   }
+  void _showConfirmationDialog(BuildContext context, Post post) {
+    showDialog(
+      context: context,
+      barrierDismissible: false, // Prevent closing by tapping outside
+      builder: (BuildContext context) {
+        return BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 5.0, sigmaY: 5.0),
+          child: Dialog(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            elevation: 0,
+            backgroundColor: Colors.transparent,
+            child: AlertDialog(
+              title: Text(
+                post.description,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Value: ${post.value}'),
+                  // Add other details as needed
+
+                  // Buttons
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Text('Cancel'),
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          // Call your method here
+                          // Example: _confirmPurchase(post);
+                          Navigator.of(context).pop(); // Close the dialog
+                        },
+                        child: Text(
+                          'Confirm',
+                          style: TextStyle(
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
+  }
+
 }

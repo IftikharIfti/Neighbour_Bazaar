@@ -2,9 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:http/http.dart';
 import 'package:neighbour_bazaar/Extras/PostTest.dart';
 import 'package:neighbour_bazaar/Extras/docRet.dart';
 import 'package:neighbour_bazaar/User-Model.dart';
+import 'package:neighbour_bazaar/UserLocation/AddressSingleton.dart';
 import 'package:neighbour_bazaar/UserLocation/GetUserLoactionforUploadPost.dart';
 import 'package:neighbour_bazaar/UserLocation/LocationSetter.dart';
 import 'package:neighbour_bazaar/UserNameSingleton.dart';
@@ -101,8 +103,8 @@ class AuthController extends GetxController {
               final userData=docSnapshot.data() as Map<String,dynamic>;
               usernameSingleton().username=userData['UserName'] ?? '';
             }
-            LocationSetter loc=LocationSetter();
-          loc.getCurrentLocation();
+
+
           await DummyDocumentPrinter.printDummyDocumentIds();
 
           //usernameSingleton().username=;
