@@ -1,14 +1,17 @@
+import 'dart:ffi';
 import 'dart:io';
 import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:neighbour_bazaar/Cart/cartCounter.dart';
+import 'package:neighbour_bazaar/Cart/cartclass.dart';
 import 'package:neighbour_bazaar/InternalSetup/Post.dart';
 import 'package:neighbour_bazaar/InternalSetup/upload.dart';
-
 import '../UserLocation/AddressSingleton.dart';
 import '../dashboard.dart';
 class children_toys extends StatelessWidget {
   final reversedPosts = List.of(Post.allPosts.reversed);
+  CartCounter cartCounter=CartCounter();
   @override
   Widget build(BuildContext context) {
     String nowaddress=addressSingleton().address;
@@ -17,20 +20,27 @@ class children_toys extends StatelessWidget {
         .toList();
 
     return WillPopScope(
+
         onWillPop: () async {
       Get.to(() => Dashboard()); // Replace Dashboard() with your actual Dashboard class
       return false; // Return false to prevent default behavior
     },
+
     child: Scaffold(
       appBar: AppBar(
         title: Text('Children\'s Toys and Clothes Section'),
         actions: [
+
+
           ElevatedButton(
             onPressed: () {
               Get.offAll(() => UploadPage()); // Redirect to UploadPage using GetX
             },
-            child: Text('Sell'), // Button text
+
+            child: Text('Sell'),
+            // Button text
           ),
+
         ],
       ),
 
@@ -129,6 +139,11 @@ class children_toys extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
+                          cartCounter.increment();
+                          String numericString = post.value.replaceAll(RegExp(r'[^0-9]'), ''); // Remove non-numeric characters
+
+                          CartClass CC=CartClass(price: int.parse(numericString), type: post.description);
+                          CartClass.addNewCart(CC);
                           // Call your method here
                           // Example: _confirmPurchase(post);
                           Navigator.of(context).pop(); // Close the dialog

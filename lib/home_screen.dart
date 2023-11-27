@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:neighbour_bazaar/Cart/addToCart.dart';
+import 'package:neighbour_bazaar/Cart/cartCounter.dart';
 import 'package:neighbour_bazaar/MenuUI/children_toys.dart';
 import 'package:neighbour_bazaar/MenuUI/electronics.dart';
 import 'package:neighbour_bazaar/MenuUI/essential.dart';
@@ -8,25 +10,47 @@ import 'package:neighbour_bazaar/MenuUI/mens_fashion.dart';
 import 'package:neighbour_bazaar/MenuUI/vehicles.dart';
 import 'package:neighbour_bazaar/MenuUI/women_fashions.dart';
 import 'package:neighbour_bazaar/UserLocation/AddressSingleton.dart';
-
+import 'package:badges/badges.dart' as badges;
 import 'InternalSetup/upload.dart';
 import 'MenuUI/mobile.dart';
 
 class HomeScreen extends StatelessWidget {
+  CartCounter cartCounter=CartCounter();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
           title: Text('Main Menu'),
+
           actions: [
+            Row(
+              children:[
+            GestureDetector(
+              onTap: () {
+                  Get.to(()=>CartPage()); // Navigate to another page using GetX
+              },
+              child: badges.Badge(
+                badgeContent: Text(cartCounter.counter.toString(),
+                  style: TextStyle(color: Colors.white),
+                ),
+                child: Icon(Icons.shopping_cart),
+              ),
+            ),
+                SizedBox(width: 16.0),
             ElevatedButton(
               onPressed: () {
                 Get.offAll(() => UploadPage()); // Redirect to UploadPage using GetX
               },
+              style: ButtonStyle(
+                fixedSize: MaterialStateProperty.all<Size>(Size(50, 40)), // Adjust the width and height as needed
+              ),
               child: Text('Sell'), // Button text
-            ),
+               ),
+              ],
+            )
           ],
+
         ),
         body: ButtonGrid(),
       ),

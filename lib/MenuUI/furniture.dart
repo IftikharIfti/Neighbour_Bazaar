@@ -5,10 +5,13 @@ import 'package:get/get.dart';
 import 'package:neighbour_bazaar/InternalSetup/Post.dart';
 import 'package:neighbour_bazaar/InternalSetup/upload.dart';
 
+import '../Cart/cartCounter.dart';
+import '../Cart/cartclass.dart';
 import '../UserLocation/AddressSingleton.dart';
 import '../dashboard.dart';
 class furniture extends StatelessWidget {
   final reversedPosts = List.of(Post.allPosts.reversed);
+  CartCounter cartCounter=CartCounter();
   @override
   Widget build(BuildContext context) {
     String nowaddress=addressSingleton().address;
@@ -131,6 +134,11 @@ class furniture extends StatelessWidget {
                       ),
                       ElevatedButton(
                         onPressed: () {
+                          cartCounter.increment();
+                          String numericString = post.value.replaceAll(RegExp(r'[^0-9]'), ''); // Remove non-numeric characters
+
+                          CartClass CC=CartClass(price: int.parse(numericString), type: post.description);
+                          CartClass.addNewCart(CC);
                           // Call your method here
                           // Example: _confirmPurchase(post);
                           Navigator.of(context).pop(); // Close the dialog
