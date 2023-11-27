@@ -8,20 +8,23 @@ class dummyDatabase{
   final String username;
   final String category;
   final String value;
+  final String name;
   dummyDatabase({
     required this.userAddress,
     required this.imageurl,
     required this.caption,
     required this.username,
     required this.category,
-    required this.value
+    required this.value,
+    required this.name
 });
   Future<void> uploadPost() async {
     if (imageurl.isNotEmpty && userAddress.isNotEmpty && caption.isNotEmpty) {
       final userData = {
         'caption': caption,
         'image': imageurl,
-        'value':value
+        'value':value,
+        'name':name
       };
       final nullData=
           {

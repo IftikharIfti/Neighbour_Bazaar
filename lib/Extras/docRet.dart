@@ -38,6 +38,7 @@ class DummyDocumentPrinter {
                  String imageUrl = relatedPostDoc['image'];
                  String caption = relatedPostDoc['caption'];
                  String value =relatedPostDoc['value'];
+                 String name=relatedPostDoc['name'];
                  print('RelatedPost Document ID: ${relatedPostDoc.id}');
                  print('Image: ${relatedPostDoc['image']}');
                  print('Caption: ${relatedPostDoc['caption']}');
@@ -48,7 +49,8 @@ class DummyDocumentPrinter {
                    selectedImage: selectedImage,
                    address: address,
                    description: description,
-                   value: value
+                   value: value,
+                   name: name
                  );
                  Post.addNewPost(post);
                }

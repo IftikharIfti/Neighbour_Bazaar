@@ -89,32 +89,8 @@ class _CartPageState extends State<CartPage> {
               style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
             ),
           Column(
-            // crossAxisAlignment: CrossAxisAlignment.start,
-            // children: [
             children:  createRadioList(),
-              // RadioListTile(
-              //   title: Text('Bkash/Nagad'),
-              //   value: val,
-              //   groupValue: selectedPaymentMethod,
-              //   onChanged: (value) {
-              //     setState(() {
-              //       selectedPaymentMethod = value as String;
-              //     });
-              //   },
-              //   selected: true,
-              // ),
-              // RadioListTile(
-              //   title: Text('Credit Card'),
-              //   value: 'Credit Card',
-              //   groupValue: selectedPaymentMethod,
-              //   onChanged: (value) {
-              //     setState(() {
-              //       selectedPaymentMethod = value as String;
-              //     });
-              //   },
-              // ),
 
-            //],
           ),
             SizedBox(height: 16.0),
             Row(

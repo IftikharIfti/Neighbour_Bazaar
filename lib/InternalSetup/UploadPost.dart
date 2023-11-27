@@ -44,6 +44,7 @@ class _UploadPostState extends State<UploadPost> {
 
   final TextEditingController captionController = TextEditingController();
   final TextEditingController valueController =TextEditingController();
+  final TextEditingController nameController =TextEditingController();
   @override
   Widget build(BuildContext context) {
     String address = AddressReturner().getAddress();
@@ -96,7 +97,7 @@ class _UploadPostState extends State<UploadPost> {
                   child: TextFormField(
                     controller: captionController,
                     decoration: InputDecoration(
-                      hintText: 'Add a caption to the post',
+                      hintText: 'Description for the product',
                     ),
                   ),
                 ),
@@ -106,6 +107,15 @@ class _UploadPostState extends State<UploadPost> {
                     controller: valueController,
                     decoration: InputDecoration(
                       hintText: 'Price for the product',
+                    ),
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.all(16.0),
+                  child: TextFormField(
+                    controller: nameController,
+                    decoration: InputDecoration(
+                      hintText: 'Name of the product',
                     ),
                   ),
                 ),
@@ -133,6 +143,7 @@ class _UploadPostState extends State<UploadPost> {
                     description=dropdownvalue;
                     String caption = captionController.text;
                     String value = valueController.text;
+
                     ImageStorer imagestore=ImageStorer(selectedImage:widget.selectedImage);
                    // imagestore.storeImage();
                     String? imageurl=await imagestore.storeImage() ;
@@ -142,7 +153,8 @@ class _UploadPostState extends State<UploadPost> {
                       selectedImage: widget.selectedImage,
                       address: address,
                       description: description,
-                      value: value
+                      value: value,
+                      name: nameController.text
                     );
                     /** dummy db**/
                     if(imageurl!=null) {
@@ -151,7 +163,8 @@ class _UploadPostState extends State<UploadPost> {
                           caption: caption,
                           username: usernameSingleton().username,
                           category: description,
-                          value: value
+                          value: value,
+                          name: nameController.text
                       );
                       dumb.uploadPost();
                     }
