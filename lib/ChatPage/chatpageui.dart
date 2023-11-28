@@ -242,7 +242,8 @@ class ChatDetailScreenState extends State<ChatDetailScreen> {
     // Determine if the message is sent or received
     bool isSentMessage = message.state == "send";
 
-    return Container(
+    return Expanded(
+        child: Container(
       margin: EdgeInsets.symmetric(vertical: 5.0),
       padding: EdgeInsets.all(10.0),
       decoration: BoxDecoration(
@@ -269,6 +270,7 @@ class ChatDetailScreenState extends State<ChatDetailScreen> {
           ],
         ),
       ),
+        )
     );
   }
 

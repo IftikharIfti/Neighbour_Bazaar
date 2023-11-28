@@ -18,8 +18,6 @@ class PfpCollector{
         {
           String username=dummyDoc.id;
              String imageurl = dummyDoc['image'];
-             print('The userpfp is $username');
-             print('The user imageurl $imageurl');
              XFile? selectedImage = await fetchImage(imageurl);
              ProfilePicClass pfp=ProfilePicClass(img: selectedImage,username: username);
             ProfilePicClass.addNewPfp(pfp);

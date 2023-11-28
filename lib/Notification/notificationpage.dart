@@ -24,7 +24,12 @@ class _NotificationPageState extends State<NotificationPage> {
   @override
   Widget build(BuildContext context) {
 
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      Get.to(() => Dashboard()); // Replace Dashboard() with your actual Dashboard class
+      return false; // Return false to prevent default behavior
+    },
+    child: Scaffold(
       appBar: AppBar(
         title: Text('Notifications'),
       ),
@@ -82,6 +87,7 @@ class _NotificationPageState extends State<NotificationPage> {
           }
         },
       ),
+    )
     );
   }
 

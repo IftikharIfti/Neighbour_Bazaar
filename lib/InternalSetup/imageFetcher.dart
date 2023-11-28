@@ -8,8 +8,6 @@ class ImageFetcher {
  final String _defaultImagePath = "img/default_pic.jpeg";
  ImageFetcher._private(){
   _selectedImage = XFile(_defaultImagePath);
-  print("Current Directory: ${Directory.current.path}");
-  print("File Exists: ${_selectedImage!.path}");
  }
 
  static final ImageFetcher _instance = ImageFetcher._private();
