@@ -7,6 +7,7 @@ import 'package:neighbour_bazaar/Cart/cartCounter.dart';
 import 'package:neighbour_bazaar/Cart/cartclass.dart';
 import 'package:neighbour_bazaar/InternalSetup/Post.dart';
 import 'package:neighbour_bazaar/InternalSetup/upload.dart';
+import '../ChatPage/chatpageui.dart';
 import '../UserLocation/AddressSingleton.dart';
 import '../dashboard.dart';
 class children_toys extends StatelessWidget {
@@ -132,6 +133,15 @@ class ProductDetailsPage extends StatelessWidget{
           children: [
             Align(
               alignment: Alignment.centerLeft,
+                child: GestureDetector(
+                  onTap: () {
+                    // Navigate to the ChatDetailsScreen
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => ChatDetailScreen(username: post.UserName)),
+                    );
+                  },
+
               child: Text(
                 post.UserName,
                 style: TextStyle(
@@ -139,6 +149,7 @@ class ProductDetailsPage extends StatelessWidget{
                   fontSize: 22.0,
                 ),
               ),
+                )
             ),
             Align(
               alignment: Alignment.centerLeft,

@@ -31,7 +31,7 @@ class messageDatabase{
       var userAddressDocRef = FirebaseFirestore.instance.collection('Message').doc(user);
       var userAddressDoc = await userAddressDocRef.get();
       if (!userAddressDoc.exists) {
-        await userAddressDocRef.set({});
+        await userAddressDocRef.set(userData);
       }
       CollectionReference userreference ;
       userreference=userAddressDocRef.collection('chatlist');
@@ -40,7 +40,7 @@ class messageDatabase{
       var localsDoc=await locals.get();
       if(!localsDoc.exists)
       {
-        await locals.set({});
+        await locals.set(userData);
       }
       CollectionReference Allposts;
       Allposts=userreference.doc(friend).collection('messages');

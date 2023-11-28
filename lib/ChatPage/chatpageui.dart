@@ -267,6 +267,7 @@ class ChatDetailScreenState extends State<ChatDetailScreen> {
   void sendMessage(String text , String friends) {
     setState(() {
       // Create a new message and add it to the list
+      print('This is $friends');
         messageDatabase message = messageDatabase(
         user: usernameSingleton().username,
         message: text,

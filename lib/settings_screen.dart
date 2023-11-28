@@ -4,6 +4,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart';
 import 'package:neighbour_bazaar/EditProfile.dart';
 import 'package:neighbour_bazaar/InternalSetup/Post.dart';
+import 'package:neighbour_bazaar/InternalSetup/UploadImageForAboutUser.dart';
+import 'package:neighbour_bazaar/InternalSetup/profilepic.dart';
 import 'login_page.dart';
 
 class SettingsScreen extends StatelessWidget {
@@ -20,6 +22,7 @@ class SettingsScreen extends StatelessWidget {
             title: Text('Edit Profile'),
             onTap: () {
               Get.to(()=>EditProfile());
+              //Get.to(()=>UploadImage());
               // Handle 'Edit Profile' action here
             },
           ),

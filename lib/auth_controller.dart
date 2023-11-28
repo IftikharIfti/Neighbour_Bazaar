@@ -13,6 +13,7 @@ import 'package:neighbour_bazaar/UserNameSingleton.dart';
 import 'package:neighbour_bazaar/dashboard.dart';
 import 'package:neighbour_bazaar/login_failure.dart';
 import 'package:neighbour_bazaar/login_page.dart';
+import 'package:neighbour_bazaar/passwordSingleton.dart';
 import 'package:neighbour_bazaar/signup_email_password_failure.dart';
 import 'package:neighbour_bazaar/Extras/user_location.dart';
 import 'package:neighbour_bazaar/user_repository.dart';
@@ -63,7 +64,9 @@ class AuthController extends GetxController {
     if(_user.value!=null) {
     //  Get.offAll(() =>  Dashboard());
       EmailSingleton().email = email;
-      Get.off(() => AboutUser(username, email, password));
+      usernameSingleton().username=username;
+      passwordSingleton().password=password;
+      Get.off(() => AboutUser());
       final user=UserModel(username: username, email: email, password: password);
     //  UserRepository.instance.createUser(user);
     }
@@ -103,7 +106,6 @@ class AuthController extends GetxController {
               final userData=docSnapshot.data() as Map<String,dynamic>;
               usernameSingleton().username=userData['UserName'] ?? '';
             }
-
 
           await DummyDocumentPrinter.printDummyDocumentIds();
 

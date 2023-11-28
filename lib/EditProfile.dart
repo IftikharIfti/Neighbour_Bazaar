@@ -1,10 +1,19 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:neighbour_bazaar/EmailSingleton.dart';
+import 'package:neighbour_bazaar/InternalSetup/imageFetcher.dart';
+import 'InternalSetup/UploadImageForAboutUser.dart';
 import 'dashboard.dart';
 
 class EditProfile extends StatefulWidget {
   // fetch the email here
+  XFile? selectedImage=ImageFetcher().selectedImage; // Assuming you're using XFile from image_picker
+ // EditProfile({required this.selectedImage});
   @override
   _EditProfileState createState() => _EditProfileState();
 }
@@ -63,7 +72,13 @@ class _EditProfileState extends State<EditProfile> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return WillPopScope(
+        onWillPop: () async {
+      Get.offAll(Dashboard());
+      return false;// Replace Dashboard() with your actual Dashboard class
+      // Return false to prevent default behavior
+    },
+    child:  Scaffold(
       appBar: AppBar(
         title: Text('Edit Profile'),
       ),
@@ -72,6 +87,30 @@ class _EditProfileState extends State<EditProfile> {
         child: Form(
           child: Column(
             children: [
+              ClipOval(
+                child: Container(
+                  width: 180.0,
+                  height: 180.0,
+                  child: GestureDetector(
+                    onTap: () {
+                      _changeProfilePic();
+                    },
+                    child: widget.selectedImage != null
+                        ? Image.file(
+                      File(widget.selectedImage!.path),
+                      width: 80.0,
+                      height: 80.0,
+                      fit: BoxFit.cover,
+                    )
+                        : Center(
+                      child: Text(
+                        'Tap here to select an image',
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               TextFormField(
                 controller: userNameController,
                 enabled: isEditing,
@@ -109,6 +148,15 @@ class _EditProfileState extends State<EditProfile> {
           ),
         ),
       ),
+    )
     );
+  }
+  void _changeProfilePic() async {
+    XFile? newProfilePic = await Get.to(() => UploadImage());
+    if (newProfilePic != null) {
+      setState(() {
+        widget.selectedImage = newProfilePic;
+      });
+    }
   }
 }

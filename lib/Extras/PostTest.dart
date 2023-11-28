@@ -66,7 +66,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:neighbour_bazaar/InternalSetup/postsFetcher.dart';
+import 'package:neighbour_bazaar/InternalSetup/imageFetcher.dart';
 
 import '../InternalSetup/Post.dart';
 import 'docRet.dart';
