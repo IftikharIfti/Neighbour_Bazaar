@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +9,7 @@ import 'package:neighbour_bazaar/ChatPage/messagedb.dart';
 import 'package:neighbour_bazaar/UserNameSingleton.dart';
 import 'package:neighbour_bazaar/dashboard.dart';
 
+import '../InternalSetup/profilepicClass.dart';
 import 'chatmessage.dart';
 
 // Future<void> main() async {
@@ -96,12 +99,46 @@ class ChatScreen extends StatefulWidget {
       body: ListView.builder(
         itemCount: usernames.length,
         itemBuilder: (context, index) {
-          return ListTile(
-            title: Text(usernames[index]),
-            onTap: () {
-              Get.to(()=>ChatDetailScreen(username: usernames[index]));
-            },
+          // return ListTile(
+          //   title: Text(usernames[index]),
+          //   onTap: () {
+          //     Get.to(()=>ChatDetailScreen(username: usernames[index]));
+          //   },
+          // );
+          ProfilePicClass? userProfile = ProfilePicClass.allPfp
+              .firstWhere((pfp) => pfp.username == usernames[index], orElse: () => ProfilePicClass(img: null, username: ''));
+
+          return Column(
+            children: [
+              // Divider at the upper side of each conversation
+              Divider(height: 1, color: Colors.grey),
+              ListTile(
+                leading: userProfile.img != null
+                    ? CircleAvatar(
+                  backgroundImage: FileImage(File(userProfile.img!.path)),
+                )
+                    : CircleAvatar(
+                  // Placeholder avatar when no image is available
+                  backgroundColor: Colors.grey,
+                  child: Text(usernames[index][0].toUpperCase()),
+                ),
+                title: Text(
+                  usernames[index],
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                subtitle: Text(
+                  "Tap to chat",
+                  style: TextStyle(fontSize: 10, color: Colors.grey),
+                ),
+                onTap: () {
+                  Get.to(() => ChatDetailScreen(username: usernames[index]));
+                },
+              ),
+              // Divider at the lower side of each conversation
+              Divider(height: 1, color: Colors.grey),
+            ],
           );
+
         },
       ),
     )

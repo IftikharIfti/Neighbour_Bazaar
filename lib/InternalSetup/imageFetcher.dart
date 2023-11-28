@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:image_picker/image_picker.dart';
 class ImageFetcher {
  XFile? _selectedImage;
- final String _defaultImagePath = 'img/default_pic.jpeg';
+ final String _defaultImagePath = "img/default_pic.jpeg";
  ImageFetcher._private(){
   _selectedImage = XFile(_defaultImagePath);
   print("Current Directory: ${Directory.current.path}");

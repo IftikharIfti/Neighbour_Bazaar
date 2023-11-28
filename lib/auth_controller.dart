@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart';
 import 'package:neighbour_bazaar/Extras/PostTest.dart';
 import 'package:neighbour_bazaar/Extras/docRet.dart';
+import 'package:neighbour_bazaar/InternalSetup/PfpCollector.dart';
 import 'package:neighbour_bazaar/User-Model.dart';
 import 'package:neighbour_bazaar/UserLocation/AddressSingleton.dart';
 import 'package:neighbour_bazaar/UserLocation/GetUserLoactionforUploadPost.dart';
@@ -106,7 +107,7 @@ class AuthController extends GetxController {
               final userData=docSnapshot.data() as Map<String,dynamic>;
               usernameSingleton().username=userData['UserName'] ?? '';
             }
-
+          await PfpCollector.printDummyDocumentIds();
           await DummyDocumentPrinter.printDummyDocumentIds();
 
           //usernameSingleton().username=;
